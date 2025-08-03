@@ -12,15 +12,11 @@ export const singUp = async (req, res) => {
 		const { username, password, email, name } = validateData;
 
 		// ? Check user if exit
-		const [rows] = await pool.execute('SELECT * FROM users WHERE username = ? ', [
+		const [rows] = await pool.execute('SELECT * FROM users WHERE username = ?  ', [
 			username,
 		]);
 
 		console.log(rows.at(0));
-
-		if (rows.length > 0) {
-			return res.status(400).json({ sucsses: false, message: 'Username already exists' });
-		}
 
 		// ? Create  user and has Password
 		const salt = bcrypt.genSaltSync(10);
@@ -44,6 +40,16 @@ export const singUp = async (req, res) => {
 			return res
 				.status(400)
 				.json({ success: false, message: 'validation error ', errors: error.errors });
+		}
+
+		if (error instanceof Error) {
+			console.log(error.message);
+
+			if (error.message.includes('Duplicate entry')) {
+				return res
+					.status(400)
+					.json({ sucsses: false, message: 'Username already exists' });
+			}
 		}
 		res.status(500).json({ sucsses: false, message: 'Internal Server Error' });
 	}
