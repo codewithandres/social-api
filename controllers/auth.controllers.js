@@ -81,7 +81,7 @@ export const singIn = async (req, res) => {
 
 		// ? response user info and token
 		res
-			.cookie('accesToken', token, {
+			.cookie('accessToken', token, {
 				httpOnly: true,
 			})
 			.status(200)
