@@ -84,6 +84,35 @@ CREATE TABLE `notifications` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- Tabla para almacenar las menciones en posts
+CREATE TABLE `post_mentions` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `postId` INTEGER NOT NULL,
+    `mentionedUserId` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `post_mentions_postId_mentionedUserId_key`(`postId`, `mentionedUserId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Foreign keys para post_mentions
+ALTER TABLE `post_mentions` ADD CONSTRAINT `post_mentions_postId_fkey` 
+    FOREIGN KEY (`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `post_mentions` ADD CONSTRAINT `post_mentions_mentionedUserId_fkey` 
+    FOREIGN KEY (`mentionedUserId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+-- Agregar tipo MENTION a las notificaciones existentes
+ALTER TABLE `notifications` MODIFY `type` ENUM('LIKE', 'COMMENT', 'FOLLOW', 'MENTION') NOT NULL;
+
+-- Agregar referencia opcional al post para notificaciones de menciones
+ALTER TABLE `notifications` ADD COLUMN `postId` INTEGER NULL;
+
+ALTER TABLE `notifications` ADD CONSTRAINT `notifications_postId_fkey` 
+    FOREIGN KEY (`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
 -- AddForeignKey
 ALTER TABLE `posts` ADD CONSTRAINT `posts_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
