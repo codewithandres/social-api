@@ -51,7 +51,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/user', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/like', likeRoutes);
-app.use('/api/comment', commentRoutes);
+app.use('/api/comments', commentRoutes);
 
 app.listen(8080, () => {
 	console.log('Server is running on port 8080');
