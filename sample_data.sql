@@ -13,13 +13,13 @@ INSERT INTO `users` (`username`, `name`, `email`, `password`, `profilePicture`, 
 
 -- Insertar posts
 INSERT INTO `posts` (`description`, `image`, `userId`) VALUES
-('¡Nuevo proyecto terminado! 🚀', 'https://picsum.photos/600/400?random=10', 5),
-('Diseño minimalista para una app móvil', 'https://picsum.photos/600/400?random=11', 22),
-('Atardecer increíble en la playa 📸', 'https://picsum.photos/600/400?random=12', 27),
-('Explorando nuevos destinos ✈️', 'https://picsum.photos/600/400?random=13', 30),
+('¡Nuevo proyecto terminado! 🚀', 'https://picsum.photos/600/400?random=10', 1),
+('Diseño minimalista para una app móvil', 'https://picsum.photos/600/400?random=11', 2),
+('Atardecer increíble en la playa 📸', 'https://picsum.photos/600/400?random=12', 3),
+('Explorando nuevos destinos ✈️', 'https://picsum.photos/600/400?random=13', 4),
 ('Código limpio es código feliz 💻', NULL, 5),
-('Nueva interfaz de usuario completada', 'https://picsum.photos/600/400?random=14', 5),
-('Sesión de fotos urbana', 'https://picsum.photos/600/400?random=15', 5);
+('Nueva interfaz de usuario completada', 'https://picsum.photos/600/400?random=14', 1),
+('Sesión de fotos urbana', 'https://picsum.photos/600/400?random=15', 2);
 
 -- Insertar comentarios
 INSERT INTO `comments` (`description`, `userId`, `postId`) VALUES

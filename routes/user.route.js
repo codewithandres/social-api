@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
 //? contollers
-import { getAllUser } from '../controllers/user.controllers.js';
+import { getAllUser, searchUsers } from '../controllers/user.controllers.js';
 
 const router = Router();
 
-router.get('/find/:userID', getAllUser);
-
+router.get('/', getAllUser);
+router.get('/search', searchUsers);
 export default router;
