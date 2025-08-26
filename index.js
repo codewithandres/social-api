@@ -50,7 +50,7 @@ app.use('/edgestore/', handler);
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRoutes);
 app.use('/api/posts', postRoutes);
-app.use('/api/like', likeRoutes);
+app.use('/api/likes', likeRoutes);
 app.use('/api/comments', commentRoutes);
 
 app.listen(8080, () => {
