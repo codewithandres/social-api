@@ -16,8 +16,6 @@ export const singUp = async (req, res) => {
 			username,
 		]);
 
-		console.log(rows.at(0));
-
 		// ? Create  user and has Password
 		const salt = bcrypt.genSaltSync(10);
 		const hashedPassword = bcrypt.hashSync(password, salt);
