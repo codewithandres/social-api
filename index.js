@@ -9,8 +9,11 @@ import userRoutes from './routes/user.route.js';
 import postRoutes from './routes/post.route.js';
 import likeRoutes from './routes/like.route.js';
 import commentRoutes from './routes/comment.route.js';
+import followRoutes from './routes/follower.route.js';
+
 import { initEdgeStore } from '@edgestore/server';
 import { createEdgeStoreExpressHandler } from '@edgestore/server/adapters/express';
+
 import z from 'zod';
 
 const app = express();
@@ -52,6 +55,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/likes', likeRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/follows', followRoutes	);
 
 app.listen(8080, () => {
 	console.log('Server is running on port 8080');
