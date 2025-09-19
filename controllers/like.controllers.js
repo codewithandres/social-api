@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken';
 
 export const getLikes = async (req, res) => {
 	try {
-		// const token = req.cookies.accessToken;
+		const token = req.cookies.accessToken;
 
-		// if (!token) return res.status(401).json({ success: false, message: 'Unauthorized' });
+		if (!token) return res.status(401).json({ success: false, message: 'Unauthorized' });
 
 		const { postId } = req.query;
 
