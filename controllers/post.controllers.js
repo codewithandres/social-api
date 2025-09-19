@@ -8,6 +8,7 @@ import z from 'zod';
 
 export const getPosts = async (req, res) => {
 	try {
+		const { userId } = req.query;
 		const token = req.cookies.accessToken;
 
 		if (!token) {
@@ -16,15 +17,27 @@ export const getPosts = async (req, res) => {
 
 		const user = jwt.verify(token, 'JWT_SECRET2025@developer');
 
-		const [rows] = await pool.execute(
-			`SELECT p.*, u.name, u.profilePicture FROM posts p 
-			JOIN users u ON u.id = p.userId
-			WHERE p.userId = ? OR p.userId IN (
-				SELECT followingId FROM follows WHERE followerId = ?
-			)
-			ORDER BY p.createdAt DESC`,
-			[user.id, user.id]
-		);
+		let query, params;
+
+		if (userId) {
+			// Posts de un usuario específico
+			query = `SELECT p.*, u.name, u.profilePicture FROM posts p 
+					 JOIN users u ON u.id = p.userId
+					 WHERE p.userId = ?
+					 ORDER BY p.createdAt DESC`;
+			params = [userId];
+		} else {
+			// Feed personal (posts propios + seguidos)
+			query = `SELECT p.*, u.name, u.profilePicture FROM posts p 
+					 JOIN users u ON u.id = p.userId
+					 WHERE p.userId = ? OR p.userId IN (
+						 SELECT followingId FROM follows WHERE followerId = ?
+					 )
+					 ORDER BY p.createdAt DESC`;
+			params = [user.id, user.id];
+		}
+
+		const [rows] = await pool.execute(query, params);
 
 		res.status(200).json({ success: true, data: rows });
 	} catch (error) {
@@ -32,6 +45,7 @@ export const getPosts = async (req, res) => {
 		console.log(error);
 	}
 };
+
 
 export const createPost = async (req, res) => {
 	try {
